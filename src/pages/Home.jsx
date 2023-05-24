@@ -5,11 +5,9 @@ import Delete from './Delete'
 import { Link } from 'react-router-dom'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import Likes from './Likes'
-// import Update from './Update'
 export default function Home () {
+  
   const [user] = useAuthState(auth)
-  // const navigate = useNavigate()
-  //, useNavigate
   const [bloglist, setbloglist] = useState([])
   const [isReadMore, setIsReadMore] = useState(true)
   const toggleReadMore = () => {

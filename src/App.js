@@ -26,18 +26,12 @@ function App () {
               path='/'
               element={
                 <div className='row mt-4'>
-                  <div className='col-md-7'>
-                    <Home />
-                  </div>
-
-                  <div className='col-md-4'>
-                    <AddEditBlog />
-                  </div>
+                  <AddEditBlog />
+                  <Home />
                 </div>
               }
             />
           </Routes>
-         
         </Router>
       </Container>
     </div>
