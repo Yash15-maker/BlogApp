@@ -27,7 +27,13 @@ export default function AddArticle () {
 
   const handlePublish = () => {
     if (!formData.title || !formData.message || !formData.image) {
-      alert('Please fill all the fields')
+      alert('Please fill all the fields');
+      setFormData({
+        title: '',
+        message: '',
+        image: '',
+      })
+      window.location.reload()
       return
     }
 

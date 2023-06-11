@@ -5,8 +5,9 @@ import Delete from './Delete'
 import { Link } from 'react-router-dom'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import Likes from './Likes'
+import './css/ArticlePage.css'
+import { Container, Button } from '@mui/material'
 export default function Home () {
-  
   const [user] = useAuthState(auth)
   const [bloglist, setbloglist] = useState([])
   const [isReadMore, setIsReadMore] = useState(true)
@@ -30,7 +31,7 @@ export default function Home () {
   return (
     <div>
       {bloglist.length === 0 ? (
-        <p>No articles found!</p>
+        <p>No Articles found!</p>
       ) : (
         bloglist.map(
           ({
@@ -44,71 +45,148 @@ export default function Home () {
             likes,
             comments
           }) => (
-            <div
-              className='border mt-3 p-7 bg-light'
-              key={id}
-              style={{ padding: '30px' }}
-            >
-              <div className='row'>
-                <div className='col-3'>
-                  <>
-                    <img
-                      src={imageUrl}
-                      alt='title'
-                      style={{
-                        height: 180,
-                        width: 180,
-                        marginTop: '30px',
-                        borderRadius: '50px'
-                      }}
-                    />
-                  </>
-                  <p style={{ marginTop: '50px', width: '200px' }}>
-                    Created at:
-                    <br />
-                    <b>{createdAt.toDate().toDateString()}</b>
-                  </p>
+            // Image,createdBy,createdat
 
-                  {user && user.uid === userId ? (
-                    <div style={{ padding: '20px' ,marginLeft: "20px"}}>
-                      {/* <svg
-                        xmlns='http://www.w3.org/2000/svg'
-                        width='16'
-                        height='16'
-                        fill='currentColor'
-                        class='bi bi-pen'
-                        viewBox='0 0 16 16'
-                      >
-                        <path d='m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z' />
-                      </svg> */}
+            <div className='m-5' key={id}>
+              <div className='row-5  border mt-2'>
+                <>
+                  <Container>
+                    <div className='row'>
+                      <div className='col-md-4 col-11 col-sm-12 pt-5'>
+                        <>
+                          <img
+                            src={imageUrl}
+                            alt='title'
+                            style={{
+                              width: '100%',
+                              // marginTop: '35px',
+                              height: '15rem',
+                              padding: '10px',
+                              borderRadius: '50px'
+                            }}
+                          />
+                        </>
+                        <p style={{ width: '100%' }}>
+                          Created at:
+                          <br />
+                          <b>{createdAt.toDate().toDateString()}</b>
+                        </p>
+                        <p>
+                          {' '}
+                          <div style={{ pading: '20px' }}>
+                            <b>Username:</b> {'   '}
+                            {createdBy && (
+                              <span>{createdBy.toUpperCase()}</span>
+                            )}
+                          </div>
+                        </p>
 
-                      <Link to={`/update/${id}`}>Update</Link>
+                        {/* //update */}
+
+                        {user && user.uid === userId ? (
+                          <div style={{ padding: '20px', marginLeft: '20px' }}>
+                            <Button variant='contained'>
+                              <Link
+                                to={`/update/${id}`}
+                                style={{ color: 'white' }}
+                              >
+                                Update
+                              </Link>
+                            </Button>
+                          </div>
+                        ) : (
+                          <></>
+                        )}
+                      </div>
+
+                      {/* Text */}
+                      <div className='col-md-6 col-12 col-sm-10 pt-5 '>
+                        <h3>{Title}</h3>
+                        <>
+                          {
+                            <p className='textparagraph'>
+                              {isReadMore ? Message.slice(0, 150) : Message}
+                              <span
+                                onClick={toggleReadMore}
+                                className='read-or-hide'
+                              >
+                                {isReadMore ? (
+                                  <Link to={`/article/${id}`}>
+                                    ...Read More
+                                  </Link>
+                                ) : (
+                                  <></>
+                                )}
+                              </span>
+                            </p>
+                          }
+
+                          {/* Delete post */}
+                          <div style={{ display: 'flex', padding: '1rem' }}>
+                            <div className='col-6 d-flex flex-row-reverse'>
+                              {user && user.uid === userId ? (
+                                <Delete id={id} imageUrl={imageUrl} />
+                              ) : (
+                                <div
+                                  style={{
+                                    fontSize: '15px',
+                                    padding: '1.5rem'
+                                  }}
+                                >
+                                  Firstly Create Your Post
+                                </div>
+                              )}
+                            </div>
+
+                            {/* Likes */}
+
+                            <div style={{ padding: '25px', display: 'flex' }}>
+                              {user && <Likes id={id} likes={likes} />}
+                              <p>{likes?.length} Like</p>
+                            </div>
+                          </div>
+
+                          {/* Comments */}
+                          {comments && comments.length > 0 && (
+                            <div className='pe-1'>
+                              <p>{comments?.length} comments</p>
+                            </div>
+                          )}
+                        </>
+                      </div>
                     </div>
-                  ) : (
-                    <></>
-                  )}
-                </div>
+                  </Container>
+                </>
+              </div>
+            </div>
+          )
+        )
+      )}
 
-                <div className='col-9 ps-5'>
-                  <div
-                    className='row'
-                    style={{
-                      padding: '50px',
-                      display: 'flex',
-                      justifyContent: 'space-evenly',
-                      flexDirection: 'column'
-                    }}
-                  >
-                    <div className='col-6' style={{ marginBottom: '20px' }}>
-                      {createdBy && (
-                        <span className='badge bg-primary'>{createdBy}</span>
-                      )}
-                    </div>
-                    <h4>Heading: {Title}</h4>
-                    <div>
-                      <>
-                        {
-                          <p className='text' style={{ fontSize: '15px',boxShadow: ' 3px 3px red, -1em 0 .4em olive;' }}>
+      {/* <div className='m-5'>
+      <div className='row ' style={{ margin: '2rem', height: '30rem' }}>
+        <div className='col-md-6 col-12 col-sm-12 pt-5' >
+          <img
+           src={imageUrl}
+            alt='product picture'
+            style={{
+              minHeight: '10rem',
+              height: '20rem',
+              width: '20rem',
+              justifyContent: 'center'
+            }}
+          />
+        </div>
+        <div className='col-md-6 col-12 col-sm-12 pt-5 '>
+          <h3>{Title}</h3>
+          <p>{items[id].description}</p>
+          <b> <p
+                            // className='text'
+                            // style={{
+                            //   fontSize: '15px',
+                            //   boxShadow: ' 3px 3px red, -1em 0 .4em olive;'
+                            // }}
+                          >
                             {isReadMore ? Message.slice(0, 150) : Message}
                             <span
                               onClick={toggleReadMore}
@@ -121,38 +199,25 @@ export default function Home () {
                               )}
                             </span>
                           </p>
-                        }
-                      </>
-                    </div>
-
-                    <div style={{ display: 'flex', padding: '5px' }}>
-                      <div className='col-6 d-flex flex-row-reverse'>
-                        {user && user.uid === userId ? (
-                          <Delete id={id} imageUrl={imageUrl} />
-                        ) : (
-                          <div style={{ fontSize: '15px', padding: '15px' }}>
-                            Firstly Create Your Post
-                          </div>
-                        )}
-                      </div>
-
-                      <div style={{ padding: '25px', display: 'flex' }}>
-                        {user && <Likes id={id} likes={likes} />}
-                        <p>{likes?.length} Like</p>
-                      </div>
-                    </div>
-                    {comments && comments.length > 0 && (
-                      <div className='pe-1'>
-                        <p>{comments?.length} comments</p>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
+                        }</b>
+          <div className='row mt-3'>
+            <div className='col-md-6 col-6'>
+              <h5>Price : ${createdAt.toDate().toDateString()}</h5>
             </div>
-          )
-        )
-      )}
+            <div className='col-md-6 col-6 '>
+              <Button
+                variant='secondary'
+                size='sm'
+                onClick={() => setShow(!show)}
+              >
+                Add Cart 
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div> 
+ */}
     </div>
+    // </div>
   )
 }

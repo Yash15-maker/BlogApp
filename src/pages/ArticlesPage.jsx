@@ -5,13 +5,10 @@ import { useParams } from 'react-router-dom'
 import { auth, db } from '../Firebase'
 import Likes from './Likes'
 import Comment from './Comment'
-import {
-  FacebookShareButton,
-  WhatsappShareButton,
-  WhatsappIcon,
-  FacebookIcon
-} from 'react-share'
-import { toast } from 'react-toastify'
+import { Button } from '@mui/material'
+import './css/ArticlePage.css'
+
+import { WhatsappShareButton, WhatsappIcon } from 'react-share'
 
 export default function ArticlesPage () {
   const { id } = useParams()
@@ -38,15 +35,12 @@ export default function ArticlesPage () {
     })
   }, [])
   return (
-    <div className='container border bg-light' style={{ marginTop: 70 }}>
-      <div className='d-flex flex-row-reverse'>
-        <button style={{ width: '10%' }} onClick={copy}>
-          {!copied
-            ? 'Copy'
-            :'Copied'
-            }
+    <div>
+      <div className='d-flex flex-row-reverse' style={{ margin: '3rem' }}>
+        <button style={{ width: '20%' }} onClick={copy}>
+          {!copied ? 'Copy' : 'Copied'}
         </button>
-        <div style={{ width: '30%' }}>
+        <div style={{ width: '40%' }}>
           <WhatsappShareButton
             url={shareUrl}
             quote={'THe blog app Link share with you '}
@@ -58,42 +52,83 @@ export default function ArticlesPage () {
       </div>
 
       {article && (
-        <div className='row'>
-          <div className='col-3'>
-            <img
-              src={article.imageUrl}
-              alt={article.Title}
-              style={{ width: '100%', padding: 10 }}
-            />
-            <h6 style={{ fontSize: '10px' }}>Author: {article.createdBy}</h6>
-            <div style={{ fontSize: '10px' }}>
-              {' '}
-              Posted on: {article.createdAt.toDate().toDateString()}
-            </div>
-          </div>
-          <div className='col-9 mt-3'>
-            <h2 style={{ float: 'left', fontSize: '20px' }}>{article.Title}</h2>
-            <div style={{ padding: '40px' }}>
-              <h4 style={{ textAlign: 'center' }}>{article.Message}</h4>
-            </div>
-            <div className='d-flex flex-row-reverse'>
-              {user && <Likes id={id} likes={article.likes} />}
-              <div className='pe-2'>
-                <p>{article.likes.length}</p>
+        // <div className='row'>
+        //   <div className='col-2'>
+        //     <img
+        //       src={article.imageUrl}
+        //       alt={article.Title}
+        //       style={{ width: '100%', padding: 10 }}
+        //     />
+        //     <h6 style={{ fontSize: '10px' }}>Author: {article.createdBy}</h6>
+        //     <div style={{ fontSize: '10px' }}>
+        //       {' '}
+        //       Posted on: {article.createdAt.toDate().toDateString()}
+        //     </div>
+        //   </div>
+        //   <div className='col-9 mt-3'>
+        //     <h2 style={{ float: 'left', fontSize: '20px' }}>{article.Title}</h2>
+        //     <div style={{ padding: '40px' }}>
+        //       <h5 style={{ textAlign: 'center' }}>{article.Message}</h5>
+        //     </div>
+        //     <div className='d-flex flex-row-reverse'>
+        //       {user && <Likes id={id} likes={article.likes} />}
+        //       <div className='pe-2'>
+        //         <p>{article.likes.length}</p>
+        //       </div>
+        //     </div>
+        //     <hr />
+
+        //     {/* comment  */}
+        //     {/* {user!==null?:(
+        //       <>
+        //       Hii Every One
+        //       </>
+        //     )} */}
+
+        //     <Comment id={article.id} />
+        //   </div>
+        // </div>
+        <>
+          <div className='m-5'>
+            <div className='row ' style={{ margin: '2rem', height: '30rem' }}>
+              <div className='col-md-6 col-12 col-sm-12 pt-5'>
+                <img
+                  src={article.imageUrl}
+                  alt={article.Title}
+                  style={{
+                    minHeight: '10rem',
+                    height: '20rem',
+                    width: '100%',
+                    justifyContent: 'center'
+                  }}
+                />
+                <>
+                  <h5>Author: {article.createdBy}</h5>
+                </>
               </div>
+
+              <div className='col-md-6 col-12 col-sm-12 pt-5 '>
+                <h3>{article.Title}</h3>
+                <p  className="para">{article.Message}</p>
+                <b>Posted on: {article.createdAt.toDate().toDateString()}</b>
+                <div className='row mt-4'>
+                  <div className='col-md-10 col-8 '>
+                    <p>
+                          {user && <Likes id={id} likes={article.likes} />}
+                      <div className=''>
+                        <p>{article.likes.length} Likes</p>
+                      </div>
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <React.Fragment>
+                <Comment id={article.id} />
+              </React.Fragment>
             </div>
-            <hr />
-
-            {/* comment  */}
-            {/* {user!==null?:(
-              <>
-              Hii Every One
-              </>
-            )} */}
-
-            <Comment id={article.id} />
           </div>
-        </div>
+        </>
       )}
     </div>
   )
