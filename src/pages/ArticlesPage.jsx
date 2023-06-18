@@ -26,7 +26,7 @@ export default function ArticlesPage () {
     setCopied(true)
   }
 
-  const shareUrl = copy
+  const shareUrl = copied
 
   useEffect(() => {
     const docRef = doc(db, 'blogs', id)
