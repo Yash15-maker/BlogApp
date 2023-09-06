@@ -1,0 +1,8 @@
+#not-found {
+  background-image: url("../../images/Not-found.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 80vh;
+  opacity: 0.5;
+}

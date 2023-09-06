@@ -1,5 +1,3 @@
-
-
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Container } from "@mui/material";
@@ -10,7 +8,8 @@ import AddEditBlog from "./pages/AddEditBlog";
 import ArticlesPage from "./pages/ArticlesPage";
 import Header from "./pages/Header";
 import Update from "./pages/Update";
-import ProfileCard from "./pages/ProfileCard";
+import Nf from "./pages/Nf";
+// import ProfileCard from "./pages/ProfileCard";
 import React, { useState } from "react";
 
 // import Header from './pages/Header'
@@ -35,7 +34,8 @@ function App() {
                 </div>
               }
             />
-            <Route path="/profile" element={<ProfileCard />} />
+            {/* <Route path="/profile" element={<ProfileCard />} /> */}
+            <Route path="/not-found" element={<Nf />} />
           </Routes>
         </Container>
       </Router>

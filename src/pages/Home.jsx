@@ -47,10 +47,11 @@ export default function Home() {
           }) => (
             // Image,createdBy,created-at
             <div className="mt-5" key={id}>
-              <div className="shadow-md w-full lg:px-16 contrast-100 shadow-cyan-300/50">
-                <div className="flex py-2 lg:py-3 my-auto absolute right-0 lg:bottom-1 bottom-0">
+              <div className="shadow-md w-full lg:px-16 contrast-150 hover:shadow-cyan-500/50 hover:shadow-lg">
+                <div className="flex justify-between gap-2 py-2 lg:py-3 my-auto absolute right-4 lg:bottom-1 bottom-0 px-16 lg:px-0">
                   {user && <Likes id={id} likes={likes} />}
                   <p sx={{ fontWeight: "regular" }}>{likes?.length} Like</p>
+                  <div>{comments?.length} Comment</div>
                 </div>
                 <div className="flex justify-between flex-col md:flex-row">
                   <div className="lg:w-80 drop-shadow-lg lg:pb-6 lg:pt-2 flex flex-col justify-between gap-0 lg:gap-2 mx-auto">
@@ -59,17 +60,17 @@ export default function Home() {
                       alt="imag-pic"
                       className="shadow-lg h-52 w-52 lg:w-60 lg:h-60 xl:w-80 xl:h-80 mx-auto"
                     />
-                    <span className="text-base lg:text-xl gap-4 lg:gap-8 pt-2">
+                    <span className="text-xs lg:text-base gap-4 lg:gap-8 pt-2">
                       Created at: {createdAt.toDate().toDateString()}
                     </span>
                     {createdBy && (
-                      <span className="text-base lg:text-xl ">
+                      <span className="text-xs lg:text-base">
                         {createdBy.toUpperCase()}
                       </span>
                     )}
                   </div>
                   <div className="flex flex-col w-full lg:px-20 py-10 gap-4">
-                    <span className="text-xl lg:text-3xl xl:text-4xl font-bold w-full mb-2">
+                    <span className="text-xl lg:text-3xl xl:text-4xl font-bold w-full mb-2 text-center">
                       {Title}
                     </span>
                     {
@@ -179,6 +180,3 @@ export default function Home() {
     // </div>
   );
 }
-
-
-

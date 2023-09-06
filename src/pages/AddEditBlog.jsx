@@ -4,7 +4,6 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage, db, auth } from "../Firebase";
 import { toast } from "react-toastify";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { Link } from "react-router-dom";
 
 export default function AddArticle() {
   const [user] = useAuthState(auth);
@@ -91,19 +90,20 @@ export default function AddArticle() {
   };
 
   return (
-    <div className="border p-3 mt-3 bg-light">
+    <div className="border lg:p-3 mt-3 bg-light">
       {!user ? (
-        <>
-          <h2>
-            <Link to="/signin">Login</Link>
-          </h2>
-          Don't have an account? <Link to="/register">Signup</Link>
-        </>
+        <div className="text-center w-full">
+          <span className="xl:text-4xl lg:text-xl text-base tracking-widest">
+            Articles-Let's Create Something Interactive
+          </span>
+        </div>
       ) : (
         <>
-          <h2>Create article</h2>
+          <h2 className="text-xl">Create article</h2>
           <div className="form-group">
-            <label htmlFor="">Title</label>
+            <label htmlFor="" className="mt-3 text-xl">
+              Title
+            </label>
             <input
               type="text"
               name="title"
@@ -113,7 +113,9 @@ export default function AddArticle() {
             />
           </div>
 
-          <label htmlFor="">Description</label>
+          <label htmlFor="" className="text-xl">
+            Description
+          </label>
           <textarea
             name="message"
             className="form-control"
@@ -121,7 +123,9 @@ export default function AddArticle() {
             onChange={(e) => handleChange(e)}
           />
 
-          <label htmlFor="">Image</label>
+          <label htmlFor="" className="text-xl">
+            Image
+          </label>
           <input
             type="file"
             name="image"
