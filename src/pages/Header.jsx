@@ -1,4 +1,5 @@
 import React from "react";
+import "./css/Home.css";
 // import { Link } from 'react-router-dom'
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../Firebase";
@@ -22,17 +23,13 @@ export default function Header() {
         <img
           src="./logo.png"
           alt="...Icon"
-          style={{ wdith: "20px", height: "40px" }}
+          style={{ wdith: "20px", height: "40px", cursor: "pointer" }}
+          onClick={() => {
+            navigate("/");
+          }}
         />
       </div>
-      <div
-        style={{ cursor: "pointer" }}
-        onClick={() => {
-          navigate("/");
-        }}
-      >
-        <span className="xl:text-2xl lg:text-xl text-base">Home</span>
-      </div>
+
       {user !== null ? (
         <>
           <span className="pe-4">{user.displayName || user.email}</span>

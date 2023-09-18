@@ -51,8 +51,12 @@ export default function Home() {
                 <div className="flex justify-between gap-2 py-2 lg:py-3 my-auto absolute right-4 lg:bottom-1 bottom-0 px-16 lg:px-0">
                   {user && <Likes id={id} likes={likes} />}
                   <p sx={{ fontWeight: "regular" }}>{likes?.length} Like</p>
-                  <div>{comments?.length} Comment</div>
+                  <div>
+                    {comments?.length}
+                    <i class="fa-regular fa-comment"></i>
+                  </div>
                 </div>
+
                 <div className="flex justify-between flex-col md:flex-row">
                   <div className="lg:w-80 drop-shadow-lg lg:pb-6 lg:pt-2 flex flex-col justify-between gap-0 lg:gap-2 mx-auto">
                     <img
@@ -176,6 +180,10 @@ export default function Home() {
         </div>
       </div> 
  */}
+      <footer className="flex justify-between bg-slate-500 px-10 py-4 mt-6">
+        <span className="text-white">Yash Mishra</span>
+        <span className="text-white">@2023</span>
+      </footer>
     </div>
     // </div>
   );

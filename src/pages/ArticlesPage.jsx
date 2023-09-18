@@ -14,19 +14,25 @@ export default function ArticlesPage() {
   const { id } = useParams();
   const [article, setArticle] = useState(null);
   const [user] = useAuthState(auth);
-  const [copied, setCopied] = useState(false);
 
   const copy = () => {
-    const el = document.createElement("input");
-    el.value = window.location.href;
-    document.body.appendChild(el);
-    el.select();
-    document.execCommand("copy");
-    document.body.removeChild(el);
-    setCopied(true);
+    // const el = document.createElement("input");
+    // el.value = window.location.href;
+    // document.body.appendChild(el);
+    // el.select();
+    // document.execCommand("copy");
+    // document.body.removeChild(el);
+    // setCopied(true);
   };
 
-  const shareUrl = copied;
+  const shareOnWhatsApp = () => {
+    const currentURL = window.location.href;
+    console.log(currentURL);
+    const text = `Check out this post: ${currentURL}`;
+    const url = `whatsapp://send?text=${encodeURIComponent(text)}`;
+
+    window.location.href = url;
+  };
 
   useEffect(() => {
     const docRef = doc(db, "blogs", id);
@@ -36,6 +42,12 @@ export default function ArticlesPage() {
   }, []);
   return (
     <div>
+      <div className=" fixed bottom-2 right-3 shadow-md flex justify-around px-2 py-1 border-2 border-indigo-200 rounded-full">
+        <i
+          class="fa-brands fa-whatsapp my-auto text-xl "
+          onClick={shareOnWhatsApp}
+        ></i>
+      </div>
       {article ? (
         <div className="w-full px-0">
           <div className="mt-10 pb-4">
@@ -64,7 +76,14 @@ export default function ArticlesPage() {
       ) : (
         <>
           <span className="tex-7xl p-20">
-            Not FOund Articles related to your Id!
+            <div
+              class="inline-block h-8 w-8 animate-[spinner-grow_0.75s_linear_infinite] rounded-full bg-current align-[-0.125em] text-success opacity-0 motion-reduce:animate-[spinner-grow_1.5s_linear_infinite]"
+              role="status"
+            >
+              <span class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+                Loading...
+              </span>
+            </div>
           </span>
         </>
       )}
